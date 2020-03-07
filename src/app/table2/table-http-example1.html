@@ -1,0 +1,54 @@
+<div class="example-container mat-elevation-z8">
+  <div class="example-loading-shade"
+       *ngIf="isLoadingResults || isRateLimitReached">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+
+    </div>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource" class="example-table"
+             matSort matSortActive="area" matSortDisableClear matSortDirection="asc">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- name Column -->
+    <ng-container matColumnDef="language">
+      <mat-header-cell *matHeaderCellDef>name</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.language }}</mat-cell>
+    </ng-container>
+
+    <!-- region Column -->
+    <ng-container matColumnDef="countries">
+      <mat-header-cell *matHeaderCellDef>region</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.countries.toString() }}</mat-cell>
+    </ng-container>
+
+    <!-- population Column -->
+    <ng-container matColumnDef="population">
+      <mat-header-cell *matHeaderCellDef>population</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.population/100000 | number:'3.1-1' }}</mat-cell>
+    </ng-container>
+
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [length]="resultsLength" [pageSize]="50">
+  </mat-paginator>
+
+</div>
+
+<div class="example-container mat-elevation-z8">
+  <div class="example-loading-shade"
+       *ngIf="isLoadingResults || isRateLimitReached">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+
+    </div>
+  </div>
+
+

@@ -1,0 +1,170 @@
+<html>
+<head>
+    <title>Angular App</title>
+</head>
+<body>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+  /* TAB COMPONENT - pure CSS */
+
+  /* OVERVIEW
+  In order to create a set of tabs and their corresponding content, it is necessary to have some set of elements serve as the underlying structural elements for the tabs because there is now way within HTML/CSS3 to have a DIV/tab be marked as the one selected from among a group of like items.  However, a group of radio buttons can serve as the underlying structure because a radio button group provides the ability, within HTML/CSS, to keep track of a single CHECKED item.
+
+  In using a group of radio buttons as the underlying elements to track which tab is SELECTED (CHECKED in radio button parlance), it is not necessary for the actual radio buttons to be visible in order to work.  In addition to a radio button itself being able to accept a click from the user, the HTML Label element corresponding to each INPUT/radio button can also accept a mouse click as long as it is VISIBLE - and if the label is visible, then it can be styled.  Therefore, in order to create the tabs, a set of radio buttons is styled so that the buttons are hidden, and then the corresponding labels are styled as tabs.
+
+  Because of the limited way in which CSS selectors work (one-way heirarchical selection), it was necessary to employ CSS Flexbox in order to properly POSITION on the screen the various HTML elements that make up the tabs and tab content.  This is because the ordering of elements in the HTML had to be created in order to cause the DOM to be structured in such a way that elements could be selected for styling based upon the currently checked item - but this ordering within the HTML does not correspond to the order in which items must be presented on-screen.
+
+  In this tab component, naming conventions and styling selectors are created in such a way as not to affect any content that is displayed in the tab set, and rules are fully name-spaced so as not to interfere with any other items on the page (so long as the #tabscontainer name is unique to the page).*/
+
+  /* Style the overall container */
+  #tabscontainer {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    position: relative;
+    margin: 30px 0 30px 0;
+    padding: 0;
+    max-width: 655px;
+  }
+  /* Set the font-family for all text within the #tabscontainer */
+  #tabscontainer * {font-family: Trebuchet MS,Verdana,Helvetica,Arial;}
+  /* Style the radio group that corresponds to the tabs */
+  #tabscontainer > [name="radiogroupfortabs"] {
+    position: absolute;
+    visibility: hidden;
+  }
+  /* Set Flexbox ordering of radio items within the #tabscontainer.  A unique rule has to be created for each tab. */
+  #tabscontainer > #radiofortab1{-webkit-box-ordinal-group:2;-webkit-order:1;-ms-flex-order:1;order:1;}
+  #tabscontainer > #radiofortab2{-webkit-box-ordinal-group:3;-webkit-order:2;-ms-flex-order:2;order:2;}
+  #tabscontainer > #radiofortab3{-webkit-box-ordinal-group:4;-webkit-order:3;-ms-flex-order:3;order:3;}
+  #tabscontainer > #radiofortab4{-webkit-box-ordinal-group:5;-webkit-order:4;-ms-flex-order:4;order:4;}
+  /* Style all radio group LABELS (by class) to look like tabs.  The currently selected tab is re-styled by another rule near the end.  Could use the background-image attribute here instead of colors in order to give the tabs any appearance desired.  If doing this, then would have to create a separate rule for each tab. */
+  #tabscontainer > [id^="tab-label"] {
+    position: relative;
+    top: 0px;
+    max-height: 18px;
+    margin: 4px 2px 0 0;
+    display: inline-block;
+    padding: 12px 21px;
+    border-radius: 5px 5px 0 0;
+    border-width: 1px 1px 1px 1px;
+    border-style: solid;
+    border-color: #000000;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    background: #B0B0B0;
+    cursor: pointer;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+  }
+  /* Style unselected tabs (INPUT element's label) when the pointer hovers over them.  Could use the background-image attribute here instead of colors in order to give the tab any appearance. */
+  #tabscontainer > [id^="tab-label"]:hover {
+    background: #969696;
+  }
+  /* Style all of the content DIVs including setting DISPLAY to None to start with.  The DIV corresponding to the currently selected tab is displayed by the rule near the end. */
+  #tabscontainer > [id^="tab-content"] {
+    -webkit-box-ordinal-group: 999;
+    -webkit-order: 999;
+    -ms-flex-order: 999;
+    order: 999; /* Set to a high value - just has to be at least one more than the number of tabs */
+    display: none;
+    z-index: 2;
+    top: 48px;
+    width: 100%;
+    min-height: 5em;
+    overflow: hidden;
+    font-size: 14px;
+    border-width: 1px;
+    border-style: solid;
+    padding: 10px 25px 25px 25px;
+    background: #c9c9c9;
+    margin-top: -1px;
+    border-radius: 0 5px 5px 5px;
+  }
+  /* Style the currently selected tab (checked INPUT element's label) by first selecting the lone checked item from the radiogroup for the tabs and then select the label (by class) that follows the checked INPUT element (INPUT element within the named group - radiogroupfortabs) in order to apply the following effects to just the selected tab/label.  Could use the background-image attribute here instead of colors in order to give the tab any appearance. */
+  #tabscontainer > [name="radiogroupfortabs"]:checked + [id^="tab-label"] {
+    z-index: 4;
+    margin-top: 0px;
+    padding-top: 16px;
+    background: #c9c9c9;
+    border-color: #000 #000 #c9c9c9 #000;
+  }
+  /* Display the content DIV that corresponds to the selected tab (because of the limitations of CSS selectors, this could not be done with a single rule.  A unique rule has to be created for each tab/tab content within the tab set.) */
+  #tabscontainer > #radiofortab1:checked ~ #tab-content1{display: block;}
+  #tabscontainer > #radiofortab2:checked ~ #tab-content2{display: block;}
+  #tabscontainer > #radiofortab3:checked ~ #tab-content3{display: block;}
+  #tabscontainer > #radiofortab4:checked ~ #tab-content4{display: block;}
+  /* Style a container within the 4th tab to hold media items.  Could have also just put this styling directly on the tab-content4 div instead of creating the #mediacontainer div.  And, while the following are fully name-spaced for explanatory purposes, only the #mediacontainer item is actually needed as long as it is unique on the page. */
+  #tabscontainer #tab-content4 #mediamatrix{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: wrap;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  #tabscontainer #tab-content4 #mediamatrix .mediaitem {
+    min-width: 21%;
+    margin: 15px 0.9% 0;
+    padding: 5px;
+    border-radius: 10px; /* This and the following line placed here just to show where media items will be displayed */
+    background-color: #ddeeff;
+    text-align: center;
+  }
+  #tabscontainer #tab-content4 #mediamatrix .mediaitem .mediaitemthumb{
+    margin-bottom: 5px;
+    min-height: 50px;
+  }
+  #tabscontainer #tab-content4 #mediamatrix .mediaitem .mediaitemcaption{
+    min-height: 20px;
+  }
+  /* ----- END OF TAB COMPONENT ----- */
+
+  /*----- Separate styling of H2 tag for CodePen demo -----*/
+  h2{
+    font-size: 1rem;
+    margin-bottom: -0.75rem;
+  }
+</style>
+
+<div id="tabscontainer">
+    <!-- NOTE:  labels are named with ID's instead of classed so that individual labels can have background images set rather than using colors if desired.
+    Referencing of the labels in the CSS is done by the selector [id^="tab-label"] which really operates like class="tab-label" -->
+    <input type="radio" name="radiogroupfortabs" id="radiofortab1" checked/>
+    <label id="tab-label1" for="radiofortab1">Table1</label>
+    <div id="tab-content1">
+        <div class="mat-app-background basic-container">
+            <table-http-example>loading</table-http-example>
+        </div>
+
+    </div>
+
+    <input type="radio" name="radiogroupfortabs" id="radiofortab2"/>
+    <label id="tab-label2" for="radiofortab2">Tabl2</label>
+    <div id="tab-content2">
+        <div class="mat-app-background basic-container">
+            <table-http-example1>loading</table-http-example1>
+        </div>
+
+    </div>
+
+
+</div>
+</body>
+</html>

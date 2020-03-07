@@ -1,0 +1,64 @@
+<div class="example-container mat-elevation-z8">
+  <div class="example-loading-shade"
+       *ngIf="isLoadingResults || isRateLimitReached">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+
+    </div>
+  </div>
+
+  <mat-table #table [dataSource]="dataSource" class="example-table"
+             matSort matSortActive="area" matSortDisableClear matSortDirection="asc">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>name</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.name }}</mat-cell>
+    </ng-container>
+
+    <!-- region Column -->
+    <ng-container matColumnDef="region">
+      <mat-header-cell *matHeaderCellDef>region</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.region }}</mat-cell>
+    </ng-container>
+
+    <!-- population Column -->
+    <ng-container matColumnDef="population">
+      <mat-header-cell *matHeaderCellDef>population</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.population/100000 | number:'3.1-1' }}</mat-cell>
+    </ng-container>
+
+    <!-- Created Column -->
+    <ng-container matColumnDef="area">
+      <mat-header-cell *matHeaderCellDef
+                       mat-sort-header
+                       disableClear="true">
+        area
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.area *0.386102 | number: '3.0-0' }}</mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [length]="resultsLength" [pageSize]="50">
+  </mat-paginator>
+  <div>average population:{{ avgOfPopulation/100000 | number:'3.1-1' }} </div>
+  <div>minimum area:{{ minArea*0.386102 | number: '3.0-0' }} </div>
+  <div>maximum area:{{ maxArea*0.386102 | number: '3.0-0' }} </div>
+
+</div>
+
+<div class="example-container mat-elevation-z8">
+  <div class="example-loading-shade"
+       *ngIf="isLoadingResults || isRateLimitReached">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+    <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
+
+    </div>
+  </div>
+
