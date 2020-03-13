@@ -1,3 +1,5 @@
+This small project demostrates how to use mattable using country data.
+
 # development framework
 nodejs
 mattable
