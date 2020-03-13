@@ -27,8 +27,8 @@
 
     <!-- population Column -->
     <ng-container matColumnDef="population">
-      <mat-header-cell *matHeaderCellDef>population</mat-header-cell>
-      <mat-cell *matCellDef="let row">{{ row.population/100000 | number:'3.1-1' }}</mat-cell>
+      <mat-header-cell *matHeaderCellDef>population (million)</mat-header-cell>
+      <mat-cell *matCellDef="let row">{{ row.population/1000000 | number:'3.1-1' }}</mat-cell>
     </ng-container>
 
     <!-- Created Column -->
@@ -36,7 +36,7 @@
       <mat-header-cell *matHeaderCellDef
                        mat-sort-header
                        disableClear="true">
-        area
+        area (square miles)
       </mat-header-cell>
       <mat-cell *matCellDef="let row">{{ row.area *0.386102 | number: '3.0-0' }}</mat-cell>
     </ng-container>
@@ -47,7 +47,7 @@
 
   <mat-paginator [length]="resultsLength" [pageSize]="50">
   </mat-paginator>
-  <div>average population:{{ avgOfPopulation/100000 | number:'3.1-1' }} </div>
+  <div>average population:{{ avgOfPopulation/1000000 | number:'3.1-1' }} </div>
   <div>minimum area:{{ minArea*0.386102 | number: '3.0-0' }} </div>
   <div>maximum area:{{ maxArea*0.386102 | number: '3.0-0' }} </div>
 

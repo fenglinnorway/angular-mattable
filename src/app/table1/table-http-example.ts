@@ -8,6 +8,7 @@ import {catchError} from 'rxjs/operators/catchError';
 import {map} from 'rxjs/operators/map';
 import {startWith} from 'rxjs/operators/startWith';
 import {switchMap} from 'rxjs/operators/switchMap';
+import {ExampleHttpDao} from '../service/data-dao';
 /**
  * @title Table retrieving data through HTTP
  */
@@ -88,20 +89,4 @@ export class TableHttpExample implements AfterViewInit {
 }
 
 
-export class ExampleHttpDao {
-  constructor(private http: HttpClient) {}
 
-  getRepoIssues(sort: string, order: string, page: number): Observable<any> {
-    const href = 'https://restcountries.eu/rest/v2/all';
-
-    return this.http.get<any>(href);
-  }
-}
-
-export interface DataSchema {
-  region: any;
-  population: any;
-  name: any;
-  languages: {name:any;};
-  area: any;
-}

@@ -15,19 +15,19 @@
 
     <!-- name Column -->
     <ng-container matColumnDef="language">
-      <mat-header-cell *matHeaderCellDef>name</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>language</mat-header-cell>
       <mat-cell *matCellDef="let row">{{ row.language }}</mat-cell>
     </ng-container>
 
     <!-- region Column -->
     <ng-container matColumnDef="countries">
-      <mat-header-cell *matHeaderCellDef>region</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>countries</mat-header-cell>
       <mat-cell *matCellDef="let row">{{ row.countries.toString() }}</mat-cell>
     </ng-container>
 
     <!-- population Column -->
     <ng-container matColumnDef="population">
-      <mat-header-cell *matHeaderCellDef>population</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef>population (million)</mat-header-cell>
       <mat-cell *matCellDef="let row">{{ row.population/100000 | number:'3.1-1' }}</mat-cell>
     </ng-container>
 

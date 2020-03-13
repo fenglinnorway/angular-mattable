@@ -37,7 +37,7 @@ import {
   MatTooltipModule,
   MatStepperModule,
 } from '@angular/material';
-import {TableHttpExample} from './app/table-http-example';
+import {TableHttpExample} from './app/table1/table-http-example';
 import {HttpModule} from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
 import {CdkTableModule} from '@angular/cdk/table';

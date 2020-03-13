@@ -8,6 +8,7 @@ import {catchError} from 'rxjs/operators/catchError';
 import {map} from 'rxjs/operators/map';
 import {startWith} from 'rxjs/operators/startWith';
 import {switchMap} from 'rxjs/operators/switchMap';
+import {ExampleHttpDao} from '../service/data-dao';
 /**
  * @title Table retrieving data through HTTP
  */
@@ -54,8 +55,8 @@ export class TableHttpExample1 implements AfterViewInit {
             var dataSchema = {language:"eng", countries:[], population: 0};
             if (!this.dataMap.has(responseData[i].languages[0].name)) {
               //
-              responseData[i].languages[0].name
-              dataSchema.language = responseData[i].languages[0].name;
+              let name1 = responseData[i].languages[0].name;
+              dataSchema.language = name1;
               dataSchema.countries.push(responseData[i].name);
               dataSchema.population += responseData[i].population;
               this.dataMap.set(dataSchema.language, dataSchema);
@@ -92,19 +93,3 @@ export class TableHttpExample1 implements AfterViewInit {
 }
 
 
-export class ExampleHttpDao {
-  constructor(private http: HttpClient) {}
-
-  getRepoIssues(sort: string, order: string, page: number): Observable<DataSchema[]> {
-    const href = 'https://restcountries.eu/rest/v2/all';
-
-    return this.http.get<DataSchema[]>(href);
-  }
-}
-
-export interface DataSchema {
-  language: any;
-  countries: any;
-  population: any;
-  name: any;
-}
